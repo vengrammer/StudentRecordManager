@@ -25,11 +25,18 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
+        //
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(),[
             'student_number' => 'required|unique:students,student_number|max:12',
-            'first_name'     => 'required|max:255|string',
-            'middle_name'    => 'nullable|max:255|string',
-            'last_name'      => 'required|max:255|string',
+            'first_name'     => 'required|max:255|regex:/^[a-zA-Z\s\-]+$/',
+            'middle_name'    => 'nullable|max:255|regex:/^[a-zA-Z\s\-]+$/',
+            'last_name'      => 'required|max:255|regex:/^[a-zA-Z\s\-]+$/',
             'birthdate'      => 'required|date',
             'age'            => 'nullable|integer',
             'email'          => 'required|email|unique:students,email|max:255',
@@ -67,14 +74,6 @@ class StudentController extends Controller
             'message' => 'Successfully add student',
             'student' => $student
         ], 200);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
